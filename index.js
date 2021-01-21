@@ -1,9 +1,9 @@
 const serverless = require('serverless-http');
 const express = require('express')
-const getAny = express()
+const app = express()
 
-getAny.get('/', function (req, res) {
+app.get('/', function (req, res) {
   res.send('Hello World!')
 })
 
-module.exports.handler = serverless(getAny);
+module.exports.handler = serverless(app);

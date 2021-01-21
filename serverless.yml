@@ -24,7 +24,6 @@ provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
-  stage: dev
   region: eu-west-2 #London
   profile: serverless
 
@@ -59,7 +58,7 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  getAny:
+  app:
     handler: index.handler
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
