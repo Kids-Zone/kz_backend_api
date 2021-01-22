@@ -58,14 +58,15 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  app:
-    handler: index.handler
+  activities:
+    handler: handler.app
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
     events:
-      - http: ANY /
-      - http: 'ANY {proxy+}'
+      - http:
+          path: /activities
+          method: GET
       # - httpApi:
       #     path: getActivity
       #     method: get

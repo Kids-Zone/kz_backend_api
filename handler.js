@@ -1,18 +1,23 @@
-'use strict';
+"use strict";
+const serverlessHttp = require("serverless-http");
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
 
-module.exports.getAny = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
+app.use(bodyParser.json());
+
+app.get("/activities", function (request, response) {
+  var activities = {
+    activites: [
+      { id: "1", name: "Dance" },
+      { id: "2", name: "Drumming" },
+      { id: "3", name: "Cooking" },
+      { id: "4", name: "Writing" },
+      { id: "5", name: "Crafts" },
+    ],
   };
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
-};
+  response.status(200).send(activities);
+});
+
+module.exports.app = serverlessHttp(app);
