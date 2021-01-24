@@ -11,19 +11,9 @@ const connection = require('./db-connect');
 viewPlan.use(bodyParser.json());
 
 viewPlan.get("/viewPlan/:id", function (request, response) {
-  // var activities = {
-  //   activites: [
-  //     { id: "1", name: "Dance" },
-  //     { id: "2", name: "Drumming" },
-  //     { id: "3", name: "Cooking" },
-  //     { id: "4", name: "Writing" },
-  //     { id: "5", name: "Crafts" },
-  //   ],
-  // };
-
-  // response.status(200).send(activities);
-  connection.query("select * from activity", function (err, data) {
-    console.log(data);
+  const auth0Id = request.params.id;
+  const query = "SELECT * FROM activity WHERE auth0Id = ?";
+  connection.query(query,[auth0Id], function (err, data) {
     if (err) {
       console.log("Error from MySQL", err);
       response.status(500).send(err);
@@ -35,50 +25,53 @@ viewPlan.get("/viewPlan/:id", function (request, response) {
 
 module.exports.viewPlan = serverlessHttp(viewPlan);
 
-createPlan.post("/createPlan", function (request, response) {
-  var activities = {
-    activites: [
-      { id: "1", name: "Dance" },
-      { id: "2", name: "Drumming" },
-      { id: "3", name: "Cooking" },
-      { id: "4", name: "Writing" },
-      { id: "5", name: "Crafts" },
-    ],
-  };
+createPlan.use(bodyParser.json());
 
-  response.status(200).send(activities);
+createPlan.post("/createPlan", function (request, response) {
+  const data = request.body;
+  console.log(data);
+  const query = "INSERT INTO activity(activity_id, activity_name, activity_summary, activity_details,activity_schedule,max_occupancy,activity_type_id,auth0Id) VALUES (?,?,?,?,?,?,?,?)";
+  connection.query(query,[data.activity_id, data.activity_name, data.activity_summary, data.activity_details,data.activity_schedule,data.max_occupancy,data.activity_type_id,data.auth0Id], function (err, data) {
+    if (err) {
+      console.log("Error from MySQL", err);
+      response.status(500).send(err);
+    } else {
+      response.status(200).send("Activity created successfully.");
+    }
+  });
 });
 
 module.exports.createPlan = serverlessHttp(createPlan);
 
-updatePlan.put("/updatePlan/:id", function (request, response) {
-  var activities = {
-    activites: [
-      { id: "1", name: "Dance" },
-      { id: "2", name: "Drumming" },
-      { id: "3", name: "Cooking" },
-      { id: "4", name: "Writing" },
-      { id: "5", name: "Crafts" },
-    ],
-  };
+updatePlan.use(bodyParser.json());
 
-  response.status(200).send(activities);
+updatePlan.put("/updatePlan/:id", function (request, response) {
+  const id = request.params.id;
+  const data = request.body; 
+  const query = "UPDATE activity SET ? WHERE activity_id = ?";
+  connection.query(query, [data, id], (err) => {
+    if (err) {
+      console.log("Error from MySQL", err);
+      response.status(500).send(err);
+    } else {
+      response.status(200).send("Activity updated successfully.");
+    }
+  });
 });
 
 module.exports.updatePlan = serverlessHttp(updatePlan);
 
 cancelPlan.delete("/cancelPlan/:id", function (request, response) {
-  var activities = {
-    activites: [
-      { id: "1", name: "Dance" },
-      { id: "2", name: "Drumming" },
-      { id: "3", name: "Cooking" },
-      { id: "4", name: "Writing" },
-      { id: "5", name: "Crafts" },
-    ],
-  };
-
-  response.status(200).send(activities);
+  const activityId = request.params.id;
+  const query = "DELETE from activity where activity_id = ?";
+  connection.query(query,[activityId], function (err, data) {
+    if (err) {
+      console.log("Error from MySQL", err);
+      response.status(500).send(err);
+    } else {
+      response.status(200).send("Activity deleted successfully.");
+    }
+  });
 });
 
 module.exports.cancelPlan = serverlessHttp(cancelPlan);
