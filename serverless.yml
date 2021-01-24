@@ -21,7 +21,10 @@ provider:
   lambdaHashingVersion: 20201221
   region: eu-west-2 #London
   profile: serverless
-
+  environment:
+      DB_HOST: ${file(./db.js):DB_HOST}
+      DB_USER: ${file(./db.js):DB_USER}
+      DB_PASSWORD: ${file(./db.js):DB_PASSWORD}
 functions:
   app:
     handler: index.handler
