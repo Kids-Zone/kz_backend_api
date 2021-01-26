@@ -11,7 +11,11 @@ booking.use(bodyParser.json());
 
 booking.get("/booking/:id", function (request, response) {
   const user_id = request.params.id;
-  const query = "SELECT * FROM activity_booking WHERE user_id = ?";
+  const query = 'SELECT b.booking_id, b.activity_id, b.user_id,a.activity_name,a.activity_schedule,t.activity_type_name \n' +
+  'FROM activity_booking b INNER JOIN activity a ON b.activity_id=a.activity_id \n' +
+  'INNER JOIN activity_type t ON a.activity_type_id = t.activity_type_id \n' +
+  'and b.user_id =?';
+
   connection.query(query,[user_id], function (err, data) {
     if (err) {
       console.log("Error from MySQL", err);
