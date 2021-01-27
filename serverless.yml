@@ -26,11 +26,12 @@ provider:
       DB_USER: ${file(./db.js):DB_USER}
       DB_PASSWORD: ${file(./db.js):DB_PASSWORD}
 functions:
-  app:
-    handler: index.handler
+  actions:
+    handler: handler.actions
     events:
-      - http: ANY /
-      - http: 'ANY {proxy+}'
+      - http:
+          path: /allActivity
+          method: GET
   viewPlan:
     handler: activityPlanHandler.viewPlan #handler.functionName GET
     events:
