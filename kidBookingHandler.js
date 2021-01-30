@@ -29,8 +29,8 @@ booking.get("/booking/:id", function (request, response) {
 booking.post("/Booking", function (request, response) {
   const data = request.body;
   console.log(data);
-  const query = "INSERT INTO activity_booking(booking_id, user_id, activity_id, created_date,updated_date) VALUES (?,?,?,?,?)";
-  connection.query(query,[data.booking_id, data.user_id, data.activity_id, data.created_date,data.updated_date], function (err, data) {
+  const query = "INSERT INTO activity_booking(user_id, activity_id, created_date,updated_date) VALUES (?,?,?,?)";
+  connection.query(query,[data.user_id, data.activity_id, data.created_date,data.updated_date], function (err, data) {
     if (err) {
       console.log("Error from MySQL", err);
       response.status(500).send(err);
