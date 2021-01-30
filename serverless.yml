@@ -32,42 +32,55 @@ functions:
       - http:
           path: /allActivity
           method: GET
+          cors: true
+      - http:
+          path: /Activity/{id}
+          method: GET
+          cors: true     
   viewPlan:
     handler: activityPlanHandler.viewPlan #handler.functionName GET
     events:
       - http:
           path: /viewPlan/{id}
           method: GET
+          cors: true
   createPlan:
     handler: activityPlanHandler.createPlan #handler.functionName POST
     events:
       - http:
           path: /createPlan
           method: POST
+          cors: true
   updatePlan:
     handler: activityPlanHandler.updatePlan #handler.functionName PUT
     events:
       - http:
           path: /updatePlan/{id}
           method: PUT
+          cors: true
   cancelPlan:
     handler: activityPlanHandler.cancelPlan #handler.functionName DELETE
     events:
       - http:
           path: /cancelPlan/{id}
           method: DELETE
+          cors: true
   booking:
     handler: kidBookingHandler.booking
     events:
       - http:
           path: /Booking/{id}
           method: GET
+          cors: true
       - http:
           path: /Booking
           method: POST
+          cors: true
       - http:
           path: /Booking/{id}
           method: PUT
+          cors: true
       - http:
           path: /Booking/{id}
           method: DELETE
+          cors: true
