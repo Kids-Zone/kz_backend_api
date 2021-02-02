@@ -84,3 +84,22 @@ functions:
           path: /Booking/{id}
           method: DELETE
           cors: true
+  schedule:
+    handler: mentorSceduleHandler.schedule
+    events:
+      - http:
+          path: /schedule/{id}
+          method: GET
+          cors: true
+      - http:
+          path: /schedule
+          method: POST
+          cors: true
+      - http:
+          path: /schedule/{id}
+          method: PUT
+          cors: true
+      - http:
+          path: /schedule/{id}
+          method: DELETE
+          cors: true
