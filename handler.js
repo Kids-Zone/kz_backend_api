@@ -37,5 +37,19 @@ actions.get("/Activity/:id", function (request, response) {
   });
 });
 
+actions.get("/ActivityByName/:name", function (request, response) {
+  const activity_name = request.params.name;
+  const query = 'SELECT * FROM activity where activity_name = ?';
+
+  connection.query(query,[activity_name], function (err, data) {
+    if (err) {
+      console.log("Error from MySQL", err);
+      response.status(500).send(err);
+    } else {
+      response.status(200).send(data);
+    }
+  });
+});
+
 
 module.exports.actions = serverlessHttp(actions);

@@ -36,7 +36,11 @@ functions:
       - http:
           path: /Activity/{id}
           method: GET
-          cors: true     
+          cors: true 
+      - http:
+          path: /ActivityByName/{name}
+          method: GET
+          cors: true 
   viewPlan:
     handler: activityPlanHandler.viewPlan #handler.functionName GET
     events:
