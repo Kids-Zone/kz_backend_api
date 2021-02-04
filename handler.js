@@ -11,7 +11,7 @@ actions.use(bodyParser.json());
 
 actions.get("/allActivity", function (request, response) {
 
-  const query = 'SELECT * FROM activity';
+  const query = 'SELECT a.activity_id, a.activity_name, a.activity_summary, a.activity_details, a.activity_schedule, a.max_occupancy, at.activity_type_name AS category FROM activity a  JOIN activity_type at ON a.activity_type_id = at.activity_type_id';
 
   connection.query(query, function (err, data) {
     if (err) {
