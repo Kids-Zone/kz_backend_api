@@ -1,6 +1,5 @@
 # Getting Started with KidsZone
-This project is built using Serverless template for node js deploying to AWS.
-This project you can refer the way endpoints are created using node.js.
+This project is RESTful api for KidsZone application, built as part of the tech for good project taught by TechReturners.This project is built using Serverless template for node js deploying to AWS.You can refer the way endpoints are created using node.js.
 
 ## Accessing AWS
 Look at serverless.yml for configuring your provider details.The serverless db credentials are taken from .aws credentials file. 
