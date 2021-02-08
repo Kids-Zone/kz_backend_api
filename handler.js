@@ -51,5 +51,25 @@ actions.get("/ActivityByName/:name", function (request, response) {
   });
 });
 
+actions.get("/participants/:id", function (request, response) {
+  const schedule_id = request.params.id;
+  const query = 'select u.forename,u.surname from user u \n' +
+  'INNER JOIN activity_booking b \n'+
+  'on u.auth0Id=b.user_id \n'+
+  'and u.role_id =1 \n'+
+  'INNER JOIN activity_schedule s \n'+
+  'on b.activity_id =s.activity_id \n'+
+  'and s.schedule_id =?';
+
+  connection.query(query,[schedule_id], function (err, data) {
+    if (err) {
+      console.log("Error from MySQL", err);
+      response.status(500).send(err);
+    } else {
+      response.status(200).send(data);
+    }
+  });
+});
+
 
 module.exports.actions = serverlessHttp(actions);
